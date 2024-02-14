@@ -1,13 +1,23 @@
 use anchor_lang::prelude::*;
+use instructions::*;
+use state::game::Tile;
 
-declare_id!("8yKkFNF7AmQivwb7NmLY3granCvv9dujhmTaz7nRA57p");
+pub mod errors;
+pub mod instructions;
+pub mod state;
+
+declare_id!("5G2pbvkWiU9dyNm6BVzBfnwXDMjaJAQWwBaUxddvxCvw");
 
 #[program]
 pub mod tic_tac_toe {
     use super::*;
 
-    pub fn initialize(ctx: Context<Initialize>) -> Result<()> {
-        Ok(())
+    pub fn setup_game(ctx: Context<SetupGame>, player_two: Pubkey) -> Result<()> {
+        instructions::setup_game::setup_game(ctx, player_two)
+    }
+
+    pub fn play(ctx: Context<Play>, tile: Tile) -> Result<()> {
+        instructions::play::play(ctx, tile)
     }
 }
 
